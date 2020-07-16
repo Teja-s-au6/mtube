@@ -1,11 +1,19 @@
 import React from 'react';
 import { GoogleLogin } from 'react-google-login';
-import config from '../config'
+import config from '../config';
+import { setUser } from '../store/userReducer';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
-export default function LoginPage() {
+const LoginPage = ({ user, setUser}) => {
     const responseGoogle = response => {
-        console.log(response)
-    }
+        if (response.error) {
+			console.error(response.error)
+		}
+		setUser({ ...response.profileObj, ...response.tokenObj })
+	}
+	
+	if (user) return <Redirect to="/" />
 	return (
 		<div>
             <br/><br/>
@@ -26,3 +34,11 @@ export default function LoginPage() {
 		</div>
 	);
 }
+
+const mapStateToProps = storeState => {
+	return {
+		user: storeState.features.users.user
+	}
+}
+
+export default connect(mapStateToProps, { setUser })(LoginPage);

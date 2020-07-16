@@ -3,12 +3,15 @@ import * as ReactBootstrap from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { GoogleLogout } from 'react-google-login';
 import config from '../config';
-const Navbar = (props) => {
+import { connect } from 'react-redux';
+import { logOutUser } from '../store/userReducer';
+const Navbar = ({user, logOutUser}) => {
 	const handleLogoutFailure = (err) => {
 		console.error(err)
 	}
-	const handleLogoutSuccess = res => {
-		console.log(res)
+	const handleLogoutSuccess = () => {
+		alert("logged out successfully")
+		logOutUser();
 	}
 	return (
 		<div>
@@ -24,7 +27,7 @@ const Navbar = (props) => {
 						</ReactBootstrap.Nav.Item>
 					</ReactBootstrap.Nav>
 					<ReactBootstrap.Nav>
-						{ !props.user ? 
+						{ !user ? 
 						<ReactBootstrap.Nav.Item>
 							<Link to="/login">
 								<button variant="secondary">Login</button>
@@ -48,4 +51,10 @@ const Navbar = (props) => {
 	);
 };
 
-export default Navbar;
+const mapStateToProps = storeState => {
+	return {
+		user: storeState.features.users.user
+	}
+}
+
+export default  connect(mapStateToProps, { logOutUser })(Navbar);
