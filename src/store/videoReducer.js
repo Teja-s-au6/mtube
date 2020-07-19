@@ -6,6 +6,18 @@ export const fetchAllVideos = createAsyncThunk(
     'videos/fetchAllVideos',
     async (_, {getState}) => {
         try {
+            const response = await axios.get(`${config.BASE_URL}/videos?part=snippet&key=${config.API_KEY}&regionCode=US&chart=mostPopular&maxResults=15&${getState().features.videos.videos ? 'pageToken' + getState().features.videos.videos.nextPageToken : "" }`);
+            return response.data
+        } catch (error) {
+            console.error(error)
+        }
+    }
+)
+
+export const fetchTrendingVideos = createAsyncThunk(
+    'videos/fetchTrendingVideos',
+    async (_, {getState}) => {
+        try {
             const response = await axios.get(`${config.BASE_URL}/videos?part=snippet&key=${config.API_KEY}&regionCode=IN&chart=mostPopular&maxResults=15&${getState().features.videos.videos ? 'pageToken' + getState().features.videos.videos.nextPageToken : "" }`);
             return response.data
         } catch (error) {
@@ -13,6 +25,8 @@ export const fetchAllVideos = createAsyncThunk(
         }
     }
 )
+
+
 
 const slice = createSlice({
     name:"videoReducer",
@@ -27,6 +41,16 @@ const slice = createSlice({
             state.isVideosFetching = false
         },
         [fetchAllVideos.rejected] : (state, action) => {
+            state.isVideosFetching = false
+        },
+        [fetchTrendingVideos.pending] : (state, action) => {
+            state.isVideosFetching = true
+        },
+        [fetchTrendingVideos.fulfilled] : (state, action) => {
+            state.videos = action.payload
+            state.isVideosFetching = false
+        },
+        [fetchTrendingVideos.rejected] : (state, action) => {
             state.isVideosFetching = false
         }
     }

@@ -9,8 +9,9 @@ class HomePage extends Component {
         this.props.fetchAllVideos()
     }
     render () {
-        if(!this.props.user)  return <Redirect to="/login" /> 
+        if(!this.props.user)  return <Redirect to="/" /> 
         return this.props.videos ? <Videos videos={this.props.videos.items} /> : <h1>Loading...</h1>
+   
     }
 }
 
