@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { fetchTrendingVideos } from '../store/videoReducer';
+import { fetchTrendingVideos,nullify } from '../store/videoReducer';
 import Videos from '../components/Videos';
 
 class TrendingPage extends Component {
     componentDidMount() {
+        this.props.nullify()
         this.props.fetchTrendingVideos()
     }
     render () {
@@ -21,4 +22,4 @@ const mapStateToProps = storeState => {
 	}
 }
 
-export default connect(mapStateToProps, {fetchTrendingVideos})(TrendingPage);
+export default connect(mapStateToProps, {fetchTrendingVideos, nullify})(TrendingPage);

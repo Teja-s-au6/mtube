@@ -5,6 +5,9 @@ import { fetchCurrentVideoComment, fetchCurrentVideos } from '../store/currentVi
 import Comments from '../components/Comments';
 class VideoDetail extends Component {
 	componentDidMount() {
+		if(this.props.match.params.videoId === undefined) {
+			return "hee"
+		}
 		this.props.fetchCurrentVideos(this.props.match.params.videoId);
 		this.props.fetchCurrentVideoComment(this.props.match.params.videoId);
 	}

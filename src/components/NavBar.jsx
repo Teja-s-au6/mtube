@@ -5,10 +5,11 @@ import { GoogleLogout, GoogleLogin } from 'react-google-login';
 import config from '../config';
 import { connect } from 'react-redux';
 import { logOutUser, setUser } from '../store/userReducer';
-import { Switch, Route, Redirect} from 'react-router-dom';
+import { Switch, Route, Redirect, withRouter} from 'react-router-dom';
 import HomePage from '../pages/HomePage';
 import TrendingPage from '../pages/TrendingPage';
 import VideoDetail from '../pages/VideoDetail';
+import SearchResultPage from '../pages/SearchResultPage';
 import 'antd/dist/antd.css';
 import '../styles/NavBar.css'
 import { Layout, Menu, Input } from 'antd';
@@ -54,7 +55,12 @@ class Navbar extends Component{
 	return (
 		<div>
 	<Layout>
-        <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
+        <Sider trigger={null} collapsible collapsed={this.state.collapsed}  style={{
+        overflow: 'auto',
+        height: '100vh',
+        position: 'fixed',
+        left: 0,
+      }}>
           <div className="logo" />
           <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
             <Menu.Item key="1" icon={<HomeOutlined />}>
@@ -74,7 +80,7 @@ class Navbar extends Component{
             </Menu.Item>
           </Menu>
         </Sider>
-        <Layout className="site-layout">
+        <Layout className="site-layout" style={{ marginLeft: !this.state.collapsed ? 200 : 70 }}>
           <Header className="site-layout-background" style={{ padding: 0 }}>
             {React.createElement(this.state.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
               className: 'trigger',
@@ -83,9 +89,10 @@ class Navbar extends Component{
 			 MTube
 			    <Search
       placeholder="search"
-      onSearch={value => console.log(value)}
+      onSearch={value => this.props.history.push(`/${value}`)}
       style={{ width: 500, marginLeft: 500 }}
-	/>{ !this.props.user ? 
+	/>
+	{ !this.props.user ? 
 		<GoogleLogin
 		clientId={config.CLIENT_ID}
 		render={(renderProps) => (
@@ -108,15 +115,17 @@ class Navbar extends Component{
           <Content
             className="site-layout-background"
             style={{
-              margin: '24px 16px',
+              margin: '24px 16px 0',
               padding: 24,
-              minHeight: 280,
+			  minHeight: 280,
+			overflow: 'initial',
             }}
           >
         <Switch>
         <Route  exact path="/" component={HomePage}/>
         <Route  exact path="/trending" component={TrendingPage}/>
 		<Route  exact path="/videos/:videoId" component={VideoDetail} />
+		<Route  exact path="/:searchQuery" component={SearchResultPage} />
         <Redirect to="/" />
       </Switch>
           </Content>
@@ -133,4 +142,4 @@ const mapStateToProps = storeState => {
 	}
 }
 
-export default  connect(mapStateToProps, { setUser,logOutUser })(Navbar);
+export default  withRouter(connect(mapStateToProps, { setUser,logOutUser })(Navbar));
