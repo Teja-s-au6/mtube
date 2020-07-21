@@ -29,7 +29,7 @@ export const fetchTrendingVideos = createAsyncThunk('videos/fetchTrendingVideos'
 export const fetchSearchVideos = createAsyncThunk('videos/fetchSearchVideos', async ({searchQuery,pageId = ''}) => {
 	try {
 		const response = await axios.get(
-			`${config.BASE_URL}/search?part=snippet&key=${config.API_KEY}&maxResults=15&pageToken=${pageId}&q=${searchQuery}`
+			`${config.BASE_URL}/search?part=snippet&key=${config.API_KEY}&type=video&maxResults=15&pageToken=${pageId}&q=${searchQuery}`
         );
         //console.log(`${config.BASE_URL}/search?part=snippet&key=${config.API_KEY}&maxResults=15&pageToken=${pageId}&q=${searchQuery}`)
 		return response.data;

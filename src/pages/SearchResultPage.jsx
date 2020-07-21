@@ -7,6 +7,7 @@ import Videos from '../components/Videos';
 class SearchResultPage extends Component {
     componentDidMount() {
         const searchQuery = this.props.match.params.searchQuery
+        console.log(searchQuery)
         this.props.fetchSearchVideos({searchQuery: searchQuery})
     }
 
@@ -14,7 +15,7 @@ class SearchResultPage extends Component {
         const prevSearchQuery = prevProps.match.params.searchQuery
         const newSearchQuery = this.props.match.params.searchQuery
         if(prevSearchQuery !== newSearchQuery) {
-            this.props.fetchSearchVideos(newSearchQuery)
+            this.props.fetchSearchVideos({searchQuery: newSearchQuery})
         }
     }
 

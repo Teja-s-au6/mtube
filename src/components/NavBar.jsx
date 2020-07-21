@@ -20,6 +20,7 @@ import {
   HomeOutlined,
   FireOutlined,
 } from '@ant-design/icons';
+import PlaylistPage from '../pages/PlaylistPage';
 
 const { Header, Sider, Content } = Layout;
 
@@ -74,8 +75,8 @@ class Navbar extends Component{
 			</Link>
             </Menu.Item>
             <Menu.Item key="3" icon={<UploadOutlined />}>
-			<Link to="/upload">
-				Upload
+			<Link to="/playlists">
+				Playlists
 			</Link>
             </Menu.Item>
           </Menu>
@@ -87,7 +88,7 @@ class Navbar extends Component{
               onClick: this.toggle,
 			})}
 			 MTube
-			    <Search
+			<Search
       placeholder="search"
       onSearch={value => this.props.history.push(`/${value}`)}
       style={{ width: 500, marginLeft: 500 }}
@@ -125,6 +126,7 @@ class Navbar extends Component{
         <Route  exact path="/" component={HomePage}/>
         <Route  exact path="/trending" component={TrendingPage}/>
 		<Route  exact path="/videos/:videoId" component={VideoDetail} />
+		<Route  exact path="/playlists" component={PlaylistPage} />
 		<Route  exact path="/:searchQuery" component={SearchResultPage} />
         <Redirect to="/" />
       </Switch>
