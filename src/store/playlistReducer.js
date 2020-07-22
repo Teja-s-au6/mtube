@@ -25,6 +25,7 @@ export const fetchPlaylists = createAsyncThunk('videos/fetchPlaylists', async (p
 export const createPlaylist = createAsyncThunk('videos/createPlaylists', async (playlist, { getState }) => {
 	const accessToken = getState().features.users.user.access_token;
 	//console.log(accessToken)
+	//console.log(`${config.BASE_URL}/playlists?part=snippet,status&key=${config.API_KEY}`,playlist)
 	try {
 		const { data } = await axios.post(
 			`${config.BASE_URL}/playlists?part=snippet,status&key=${config.API_KEY}`,
@@ -36,13 +37,13 @@ export const createPlaylist = createAsyncThunk('videos/createPlaylists', async (
 				}
 			}
 		);
-		//console.log(`${config.BASE_URL}/playlists?part=snippet&key=${config.API_KEY}&mine=true&maxResults=20&pageToken=${pageId}`)
+		//console.log(`${config.BASE_URL}/playlists?part=snippet,status&key=${config.API_KEY}`,playlist)
 		const playlistObj = getState().features.playlists.playlists;
-		console.log(playlistObj.items, data)
-		// const createdPlaylist = Object.assign({...playlistObj.items}, data)
+		//console.log(playlistObj.items, data)
+		const create = Object.assign({...playlistObj.items}, data)
 		// console.log(createdPlaylist)
-		 playlistObj.items.push(data)
-		 return {...playlistObj}
+		 //playlistObj.items.push(data)
+		 return create
 	} catch (error) {
 		console.error(error);
 	}

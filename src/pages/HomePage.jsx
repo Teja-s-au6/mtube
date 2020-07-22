@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchAllVideos, nullify } from '../store/videoReducer';
 import Videos from '../components/Videos';
+import { Spin } from 'antd';
 
 class HomePage extends Component {
     componentDidMount() {
@@ -17,7 +18,7 @@ class HomePage extends Component {
         this.props.fetchAllVideos(this.props.videos.prevPageToken)
     }
     render () {
-        if(!this.props.user)  return <Redirect to="/" /> 
+        if(this.props.user === null || undefined)  return <Redirect to="/" /> 
         return this.props.videos ? 
         <>
         <Videos videos={this.props.videos.items} />
@@ -28,7 +29,15 @@ class HomePage extends Component {
              </>
               : null }
         </>
-        : <h1>Loading...</h1>
+        : <div style={{  
+            textAlign: "center",
+            borderRadius: 4,
+            marginBottom: 20,
+            padding: "30px 50px",
+            margin: "500px 0"
+            }} >
+        <Spin size="large" />
+      </div>
    
     }
 }

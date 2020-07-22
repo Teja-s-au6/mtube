@@ -21,6 +21,7 @@ import {
   FireOutlined,
 } from '@ant-design/icons';
 import PlaylistPage from '../pages/PlaylistPage';
+import ProfilePage from '../pages/ProfilePage';
 
 const { Header, Sider, Content } = Layout;
 
@@ -107,7 +108,9 @@ class Navbar extends Component{
 	/>
 		:
 		<>
-		<Button variant="primary" style={{marginLeft: 250, marginRight: 25}}>Profile</Button>
+		<Link to='/profile'>
+			<Button variant="primary" style={{marginLeft: 250, marginRight: 25}}>Profile</Button>
+		</Link>
 		<GoogleLogout clientId={config.CLIENT_ID} buttonText="Logout" 
 		onLogoutSuccess={this.handleLogoutSuccess} onFailure={this.handleLogoutFailure} />
 		</>
@@ -124,6 +127,7 @@ class Navbar extends Component{
           >
         <Switch>
         <Route  exact path="/" component={HomePage}/>
+		<Route exact path="/profile" component={ProfilePage} />
         <Route  exact path="/trending" component={TrendingPage}/>
 		<Route  exact path="/videos/:videoId" component={VideoDetail} />
 		<Route  exact path="/playlists" component={PlaylistPage} />

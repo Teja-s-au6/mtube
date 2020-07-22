@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchSearchVideos } from '../store/videoReducer';
 import Videos from '../components/Videos';
+import { Spin } from 'antd';
 
 class SearchResultPage extends Component {
     componentDidMount() {
@@ -39,7 +40,15 @@ class SearchResultPage extends Component {
              </>
               : null }
         </>
-        : <h1>Loading...</h1>
+        : <div style={{  
+            textAlign: "center",
+            borderRadius: 4,
+            marginBottom: 20,
+            padding: "30px 50px",
+            margin: "500px 0"
+            }} >
+        <Spin size="large" />
+      </div>
    
     }
 }
