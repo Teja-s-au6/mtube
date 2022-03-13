@@ -16,7 +16,6 @@ export const fetchChannel = createAsyncThunk('profile/fetchChannel', async (_, {
 				}
 			}
 		);
-		//console.log(`${config.BASE_URL}/playlists?part=snippet&key=${config.API_KEY}&mine=true&maxResults=20&pageToken=${pageId}`)
 		return response.data;
 	} catch (error) {
 		console.error(error);
